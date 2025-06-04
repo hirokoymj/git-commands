@@ -4,7 +4,7 @@
 - https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
 - https://git-scm.com/docs/git-branch
 
-## Four locatinos in Git
+## Four locations
 
 1. Working Directory - your local development environment where you make changes to your code
 2. Staging Area
@@ -118,10 +118,7 @@ Brancing enables isolated development and collaborating workflows. -->
 ref: refs/heads/test1
 ```
 
-
-
 12. How do you revert a commit that has already been pushed and made public?
-
 
 **References:**
 
