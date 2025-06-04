@@ -1,5 +1,9 @@
 # Git
 
+squash test 1
+squash test 2
+squash test 3
+
 - https://www.datacamp.com/blog/git-interview-questions-and-answers
 - https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
 - https://git-scm.com/docs/git-branch
