@@ -1,217 +1,131 @@
-## Squash my last X commits together
+# Git
 
-```js
-// Check how many commits you want to combine.
-git log
-// Combine three commits
-git reset --soft HEAD~3 &&
-git commit
+- https://www.datacamp.com/blog/git-interview-questions-and-answers
+- https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
+- https://git-scm.com/docs/git-branch
 
-// Push to remote
-git push origin test-branch
-```
+## Four locatinos in Git
 
-**BEFORE squashing**
+1. Working Directory - your local development environment where you make changes to your code
+2. Staging Area
+3. Local Repository
+4. Remote Repository
 
-```js
-% git log
-commit 9b1d29626cb4fae62da7492028048fcea0f159b5 (HEAD -> master)
-Author: Hiroko Yamaji <hiroko@hirokoymj.com>
-Date:   Tue Jan 18 17:55:28 2022 +0900
+![](./screen/four-locations.png)
 
-    second commit
+## git clone
 
-commit d2fd9e8a62b6518e07890fb352694d172b633b54
-Author: Hiroko Yamaji <hiroko@hirokoymj.com>
-Date:   Tue Jan 18 17:55:02 2022 +0900
+- From an existing Remote repository to Local Repository
+- Clone a repository into a new directory
+- https://git-scm.com/docs/git-clone
 
-    first commit
+## git add
 
-commit d0499f4c9f87da9b98a8fbffbeb40c408d51fdc6 (origin/master)
-Author: Hiroko Yamaji <hiroko@hirokoymj.com>
-Date:   Tue Jan 18 14:42:01 2022 +0900
+- Save files from Workind Directory to Staging Area to prepare the next commit snapshot.
+- prepares them for staging.
+- https://git-scm.com/docs/git-add
 
-    Updated readme
-```
+## git commit
 
-**AFTER squashing**
-
-```js
-commit b6be0711908dccaa83150e57f3c3932b72596b9a (HEAD -> master)
-Author: Hiroko Yamaji <hiroko@hirokoymj.com>
-Date:   Tue Jan 18 17:57:22 2022 +0900
-
-    Combined two commits here!
-
-commit d0499f4c9f87da9b98a8fbffbeb40c408d51fdc6 (origin/master)
-Author: Hiroko Yamaji <hiroko@hirokoymj.com>
-Date:   Tue Jan 18 14:42:01 2022 +0900
-
-    Updated readme
-```
-
-<hr />
-
-## Squash my last X commits together(after pushing to remote)
-
-```js
-// Check how many commits you want to combine.
-git log
-// Combine three commits
-git reset --soft HEAD~3 &&
-git commit
-
-// Push to remote with force option
-git push origin test --force
-```
-
-<hr />
-
-## Merge
-
-Trying to merge `test-branch` to `master` branch.
-
-1. Check if you are currently master branch.
-   ```js
-   git branch
-   ```
-2. Merge `test-branch` to `master`
-   ```js
-   git merge test-branch
-   ```
-3. Push the upated master branch to remote repository
-   ```js
-   git push origin master
-   ```
-
-<hr />
-
-## Pull
-
-Get the latest code from remote repository so your local repository could be updated. When your co-workers update a master branch, you should get the latest one!
-
-```js
-git pull master
-```
-
-<hr />
-
-## Stash
-
-Using `stash` command, you can hold your all changes temporary and makes clean working directory. So you can merege the latest master into your own branch.
-
-```js
-git stash //-----> Hold all your changes and your branch becomes clean.
-git merge master //---> you can merge the latest master here!
-git stash apply	// ---> Changed back to your changes.
-```
-
-<hr />
-
-## Log
-
-Trying to see the git log.
+- Save changes from Staging area to Local Repo with a short comment.
+- take a snapshot of the staging area and saves it to your local repo.
+- Each commit creates **a unique identifier**. `* 63095ec (HEAD -> test1) first commit`
+- https://git-scm.com/docs/git-commit
+- Record changes to the repository
 
 ```js
 git log ---graph --oneline
+hiroko@owners-MBP Git % git log --graph --oneline
+* 63095ec (HEAD -> test1) first commit
+* 7a4d8ee (test3, test2, master) first commit
+hiroko@owners-MBP Git %
 ```
+
+## git pull
+
+- To integrate your teammates's work, you use git pull which fetches changes from remote repository and merges them into your local repo.
+- https://git-scm.com/docs/git-pull
+- Fetch from and integrate with another repository or a local branch
+- From remote repo to local repo
+
+![](./screen/git-fetch-git-pull.png)
 
 <hr />
 
-## Delete Remote Branch
+## 10. What is the difference between git fetch and git pull?
 
-```js
-git push origin --delete <remote branch name>
-```
+**git fetch:**
 
-```js
-hiroko@owners-MacBook-Pro git-command % git push origin --delete demo
-To https://github.com/hirokoymj/git-command.git
- - [deleted]         demo
-```
+- The git fetch command retrieves changes from a remote repository to the local repository.
+- but it does not update the working directory or merge any changes into the current branch.
+- This means that after fetching, you can review the changes made in the remote repository without affecting your local work.
 
-<hr />
+**git pull**
 
-## Delete Local Branch
-
-```js
-git branch -D <branch name>
-```
+- fetching changes from a remote repo and merging them into the current branch in **one step**.
 
 <hr />
 
-## Show remote repository in your local
+## git branch
 
-```js
-git remote show origin
+- List, create, or delete branches
+- List: `git branch` or `git branch --list`
+- Create: `git branch <branchname>`
+- Delete: `git branch -D <branchname>`
+- https://git-scm.com/docs/git-branch
+- Git branching - allows you to diverge from the main codebase to develop a new feature without impacting the main code.
 
-git fetch
-git checkout test
+## git switch
+
+- Switch branches
+- `git switch branchname`
+- https://git-scm.com/docs/git-switch
+
+## git checkout
+
+- Switch branches or restore working tree files
+- `git checkout -b my-branch` - Create a new branch named "new-branch" and check the resulting branch out.
+- https://git-scm.com/docs/git-checkout
+
+<!-- Git Merge/Git Rebase
+resolving merge confilict s hwen changes overlap
+Brancing enables isolated development and collaborating workflows. -->
+
+- https://www.youtube.com/watch?v=0chZFIZLR_0
+
+## 8. What is a conflict in Git?
+
+- https://www.youtube.com/watch?v=DloR0BOGNU0
+
+- When git merge or git pull, merge conflict happens.
+- `git merge --abort` : if you don't have time right now to deal with the conflict, you just abort the merge.
+  To fix merge conflict -
+
+- `git status` - check which files are conflicted.
+- Open conflict file and check conflict markers. Then, fix the confilicts manually. A `HEAD` marker shows the current changes in your branch. The another conflict marker shows incoming changes with a branch name.
+
+```
+<<<HEAD marker (Current change)
+>>>>>main (Incoming Change)
 ```
 
-<hr />
+- Run `git status` again but git doesn't know yoru change so run `git add` to add the changes to the state area each file. Then run `git commit` to test the changes in your local.
 
-## git reset HEAD^
+## What is HEAD in Git?
 
-https://dzone.com/articles/git-reset-head
-
-## Rename local branch
-
-If you want to rename a branch while pointed to any branch, do:
-
-```js
-git branch -m <oldname> <newname>
+```
+% cat .git/HEAD
+ref: refs/heads/test1
 ```
 
-If you want to rename the current branch, you can do:
 
-```js
-git branch -m <newname>
-```
 
-## Switching current repo to another one
+12. How do you revert a commit that has already been pushed and made public?
 
-```js
-git remote set-url origin <new repository> to update your config
-```
 
-git remove -v to see your current repository
+**References:**
 
-## Undo your commit
+- https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
+- https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
 
-```js
-git reset HEAD~
-```
-
-## Checkout remote branch
-
-Use `checkout` instead of `git pull branch-name`
-
-```js
-git checkout [remote branch name]
-```
-
-## Modify a commit message
-
-- Run `git commit --amend`.
-
-```js
-git commit --amend
-```
-
-- In Editor mode you can change a current message.
-
-```js
-comment 1
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# Date:      Fri Dec 17 11:51:29 2021 +0900
-#
-```
-
-### References:
-
-- [Squash my last X commits together using Git](https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git)
-- [Revert to a commit by a SHA hash in Git?](https://stackoverflow.com/questions/1895059/revert-to-a-commit-by-a-sha-hash-in-git)
+# Memory note
