@@ -33,14 +33,6 @@
 - https://git-scm.com/docs/git-commit
 - Record changes to the repository
 
-```js
-git log ---graph --oneline
-hiroko@owners-MBP Git % git log --graph --oneline
-* 63095ec (HEAD -> test1) first commit
-* 7a4d8ee (test3, test2, master) first commit
-hiroko@owners-MBP Git %
-```
-
 ## git pull
 
 - To integrate your teammates's work, you use git pull which fetches changes from remote repository and merges them into your local repo.
@@ -87,29 +79,60 @@ hiroko@owners-MBP Git %
 - `git checkout -b my-branch` - Create a new branch named "new-branch" and check the resulting branch out.
 - https://git-scm.com/docs/git-checkout
 
-<!-- Git Merge/Git Rebase
-resolving merge confilict s hwen changes overlap
-Brancing enables isolated development and collaborating workflows. -->
+## git rebase -i HEAD~x
 
-- https://www.youtube.com/watch?v=0chZFIZLR_0
+- Git rebase is a handy tool to have for creating nice clean history in your git repository
+- Ex. Squash 3 commits history to one
+
+```
+git log
+git rebase -i HEAD~3
+pick 1b9d9cb commit 1
+pick 9917593 commit 2
+pick a571ceb commit 3
+------------>Suash commit 2 and 3
+pick 1b9d9cb commit 1
+squash 9917593 commit 2
+squash a571ceb commit 3
+:wq!
+ESC key
+------------> Edit the comment for 3 commits.
+# This is a combination of 3 commits.
+# This is the 1st commit message:
+
+commit 1
+
+# This is the commit message #2:
+
+#commit 2
+
+# This is the commit message #3:
+
+#commit 3
+:wq!
+ESC key
+------------
+```
 
 ## What is a conflict in Git?
 
 - https://www.youtube.com/watch?v=DloR0BOGNU0
 
-- When git merge or git pull, merge conflict happens.
-- `git merge --abort` : if you don't have time right now to deal with the conflict, you just abort the merge.
-  To fix merge conflict -
+1. `git merge` or `git pull`
+2. `git status` - check which files are conflicted.
+3. Conflict markers:
 
-- `git status` - check which files are conflicted.
-- Open conflict file and check conflict markers. Then, fix the confilicts manually. A `HEAD` marker shows the current changes in your branch. The another conflict marker shows incoming changes with a branch name.
+- `HEAD` marker: - your branch changes.
+- Incoming Change marker: changes from another branch.
 
-```
+```js
 <<<HEAD marker (Current change)
->>>>>main (Incoming Change)
+>>>>>
 ```
 
-- Run `git status` again but git doesn't know yoru change so run `git add` to add the changes to the state area each file. Then run `git commit` to test the changes in your local.
+4. Manually pick the changes either HEAD marker or Incoming Change marker. Merge conflict doesn't overwide automatically.
+   main (Incoming Change)
+5. Run `git status` again but git doesn't know your change so run `git add` to add the changes to the state area each file.
 
 ## What is HEAD in Git?
 
@@ -118,11 +141,16 @@ Brancing enables isolated development and collaborating workflows. -->
 ref: refs/heads/test1
 ```
 
-12. How do you revert a commit that has already been pushed and made public?
+## git status
 
-**References:**
+- Displays the current state of the repository in Git.
+- modified, Untracked, new file
+- identify which files are staged for the next commit.
+- A file in red ===> Unstaged
+- A file in green ===> Staged
+- https://git-scm.com/docs/git-status
+
+## References:
 
 - https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
 - https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
-
-# Memory note
