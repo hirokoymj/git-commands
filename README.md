@@ -1,8 +1,4 @@
-# Git
-
-- https://www.datacamp.com/blog/git-interview-questions-and-answers
-- https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
-- https://git-scm.com/docs/git-branch
+# Git commands
 
 ## Four locations
 
@@ -15,34 +11,30 @@
 
 ## git clone
 
-- From an existing Remote repository to Local Repository
-- Clone a repository into a new directory
+- An existing Remote Repo -> Local Repo.
+- Clone a repository into a new directory.
 - https://git-scm.com/docs/git-clone
 
 ## git add
 
-- Save files from Workind Directory to Staging Area to prepare the next commit snapshot.
-- prepares them for staging.
+- Save files from Workind Directory to the staging area to prepare the next commit snapshot.
+- Working Directory -> State Area
 - https://git-scm.com/docs/git-add
 
 ## git commit
 
-- Save changes from Staging area to Local Repo with a short comment.
+- Save changes from Staging Srea to Local Repo with a comment.
 - take a snapshot of the staging area and saves it to your local repo.
 - Each commit creates **a unique identifier**. `* 63095ec (HEAD -> test1) first commit`
 - https://git-scm.com/docs/git-commit
-- Record changes to the repository
 
 ## git pull
 
-- To integrate your teammates's work, you use git pull which fetches changes from remote repository and merges them into your local repo.
+- To integrate your teammates's work, you use `git pull` which **fetches** changes from remote repository and **merges** them into your local repo.
+- Fetch and Merge.
 - https://git-scm.com/docs/git-pull
-- Fetch from and integrate with another repository or a local branch
-- From remote repo to local repo
 
 ![](./screen/git-fetch-git-pull.png)
-
-<hr />
 
 ## git fetch vs git pull?
 
@@ -54,7 +46,7 @@
 
 **git pull**
 
-- fetching changes from a remote repo and merging them into the current branch in **one step**.
+- fetching changes from a remote repo and merging them into the current your branch in **one step**. Fetch and Merge.
 
 <hr />
 
@@ -64,8 +56,8 @@
 - List: `git branch` or `git branch --list`
 - Create: `git branch <branchname>`
 - Delete: `git branch -D <branchname>`
-- https://git-scm.com/docs/git-branch
 - Git branching - allows you to diverge from the main codebase to develop a new feature without impacting the main code.
+- https://git-scm.com/docs/git-branch
 
 ## git switch
 
@@ -75,7 +67,7 @@
 
 ## git checkout
 
-- Switch branches or restore working tree files
+- Switch branches or restore working tree files.
 - `git checkout -b my-branch` - Create a new branch named "new-branch" and check the resulting branch out.
 - https://git-scm.com/docs/git-checkout
 
@@ -123,15 +115,17 @@ ESC key
 3. Conflict markers:
 
 - `HEAD` marker: - your branch changes.
-- Incoming Change marker: changes from another branch.
 
-```js
-<<<HEAD marker (Current change)
->>>>>
-```
+  ```js
+  <<<HEAD marker (Current change)
+  ```
 
-4. Manually pick the changes either HEAD marker or Incoming Change marker. Merge conflict doesn't overwide automatically.
-   main (Incoming Change)
+- Incoming marker: changes from another branch.
+  ```js
+  >>>>>main (Incoming Change)
+  ```
+
+4. Manually pick the changes either HEAD marker or Incoming marker. Merge conflict doesn't overwide the changes in your branch automatically.
 5. Run `git status` again but git doesn't know your change so run `git add` to add the changes to the state area each file.
 
 ## What is HEAD in Git?
@@ -152,5 +146,8 @@ ref: refs/heads/test1
 
 ## References:
 
+- https://www.datacamp.com/blog/git-interview-questions-and-answers
+- https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
+- https://git-scm.com/docs/git-branch
 - https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
 - https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
