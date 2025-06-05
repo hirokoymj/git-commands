@@ -50,7 +50,13 @@ git commit -am ## Stage and commit changes in one step.
 
 ## git pull
 
+- From Remote repo to local
 - To integrate your teammates's work, you use git pull which fetches changes from remote repository and merges them into your local repo.
+
+```js
+git pull origin master
+git pull origin my-branch
+```
 
 ## Git branching
 
