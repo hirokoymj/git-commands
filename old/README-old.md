@@ -213,5 +213,9 @@ comment 1
 
 ### References:
 
+<<<<<<< HEAD
 - [Squash my last X commits together using Git](https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git)
+=======
+- [Squash my last X commits together using Git](https:/q/stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git)
+>>>>>>> d95adf442ba3e372135d5c2a9c5d6054a42fa335
 - [Revert to a commit by a SHA hash in Git?](https://stackoverflow.com/questions/1895059/revert-to-a-commit-by-a-sha-hash-in-git)
