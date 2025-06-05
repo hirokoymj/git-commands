@@ -1,9 +1,8 @@
 # Git
 
-test 1
-test 2
-test 3
-test 4
+test 11
+test 22
+test 33
 
 - https://www.datacamp.com/blog/git-interview-questions-and-answers
 - https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
@@ -71,6 +70,18 @@ allows you to diverge from the main codebase to develop a new feature without im
 <!-- Git Merge/Git Rebase
 resolving merge confilict s hwen changes overlap
 Brancing enables isolated development and collaborating workflows. -->
+
+## git rebase -i HEAD~x
+
+- Git rebase is a handy tool to have for creating nice clean history in your git repository
+- Ex. Squash 3 commits history to one
+
+```
+git log
+git rebase -i HEAD~3
+```
+
+- How to squash and rebase in git
 
 **References:**
 
