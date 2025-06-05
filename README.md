@@ -52,7 +52,7 @@ hiroko@owners-MBP Git %
 
 <hr />
 
-## 10. What is the difference between git fetch and git pull?
+## git fetch vs git pull?
 
 **git fetch:**
 
@@ -93,7 +93,7 @@ Brancing enables isolated development and collaborating workflows. -->
 
 - https://www.youtube.com/watch?v=0chZFIZLR_0
 
-## 8. What is a conflict in Git?
+## What is a conflict in Git?
 
 - https://www.youtube.com/watch?v=DloR0BOGNU0
 
