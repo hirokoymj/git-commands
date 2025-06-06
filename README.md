@@ -146,9 +146,6 @@ ref: refs/heads/test1
 
 ## git reset vs git revert
 
-- 12. How do you revert a commit that has already been pushed and made public?
-- https://git-scm.com/docs/git-revert
-- https://www.youtube.com/watch?v=GytsxgB4-HU&t=21s
 - How to undo a git commit? Already pushed ? `git reset` : `git revert`
 - `git log --oneline --branches --not --remotes`
 - listed a commit history -> Not yet pushed => `reset`.
