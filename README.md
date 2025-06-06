@@ -154,9 +154,19 @@ ref: refs/heads/test1
 - listed a commit history -> Not yet pushed => `reset`.
 - listed nothing -> Already pushed => Use `revert`.
 
+```js
+git log --oneline
+git revert --no-edit f13e416
+git log --oneline
+ab72d1f (HEAD -> main) Revert "Revert "added debug code 2""
+f13e416 Revert "added debug code 2" <=== The history of `f13e416` exist.
+```
+
 <hr />
 
-## git checkout . !!! BE CAREFUL
+## git checkout . !!!Careful!!
+
+- Deleted all uncommited changes forever!
 
 ## References:
 
