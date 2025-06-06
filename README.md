@@ -146,14 +146,35 @@ ref: refs/heads/test1
 
 ## git reset vs git revert
 
-- How to undo a git commit? Already pushed ? `git reset` : `git revert`
-- `git log --oneline --branches --not --remotes`
-- listed a commit history -> Not yet pushed => `reset`.
-- listed nothing -> Already pushed => Use `revert`.
+- Undo a git commit.
+- git reset -> Remove git commit history entirely.
+- git revert -> add revert history.
+- Already pushed ? `git revert` : `git reset`
+
+![](/screen/git-reset.png)
+![](/screen/git-revert-history.png)
+![](/screen/git-reset-vs-git-revert.png)
+
+- https://www.youtube.com/watch?v=GytsxgB4-HU
+- Check if already pushed or not.
+
+  `git log --oneline --branches --not --remotes`
+
+**Summary**
+
+```js
+git log --oneline
+git reset HEAD~1
+git reset HEAD~3
+git reset 3bde3a5
+git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Removed!!
+```
 
 <hr />
 
-## git checkout . !!! BE CAREFUL
+## git checkout . !!!Careful!!
+
+- Deleted all uncommited changes forever!
 
 ## References:
 
