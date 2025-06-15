@@ -126,7 +126,8 @@ ESC key
 ## What is HEAD in Git?
 
 - HEAD is a pointer to the current commit on the currently checked-out branch.
-- https://stackoverflow.com/questions/2304087/what-is-head-in-git
+  ![](./screen/HEAD-main.png)
+  ![](./screen/HEAD-branch.png)
 
 ## git status
 
@@ -176,3 +177,4 @@ git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Remo
 - https://git-scm.com/docs/git-branch
 - https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
 - https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
+- https://stackoverflow.com/questions/2304087/what-is-head-in-git
