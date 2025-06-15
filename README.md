@@ -2,13 +2,12 @@
 
 ## Four locations
 
-1. Working Directory (your local development env)
+1. Working Directory - your local development environment where you make changes to your code
 2. Staging Area
 3. Local Repository
 4. Remote Repository
 
-![](./screen/git-4-locations.png)
-![](./screen/git-local-locations.png)
+![](./screen/four-locations.png)
 
 ## git clone
 
@@ -26,9 +25,8 @@
 
 - Save changes from Staging Srea to Local Repo with a comment.
 - take a snapshot of the staging area and saves it to your local repo.
-- A commit hash == a unique identifier
+- Each commit creates **a unique identifier**. `* 63095ec (HEAD -> test1) first commit`
 - https://git-scm.com/docs/git-commit
-  ![](./screen/commit-hash.png)
 
 ## git pull
 
