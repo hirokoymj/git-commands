@@ -8,7 +8,7 @@
 4. Remote Repository
 
 ![](./screen/git-4-locations.png)
-![](./screen/git-local-locations.png)
+![](./screen/git-locations.png)
 
 ## git clone
 
