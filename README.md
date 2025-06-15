@@ -125,10 +125,8 @@ ESC key
 
 ## What is HEAD in Git?
 
-```
-% cat .git/HEAD
-ref: refs/heads/test1
-```
+- HEAD is a pointer to the current commit on the currently checked-out branch.
+- https://stackoverflow.com/questions/2304087/what-is-head-in-git
 
 ## git status
 
