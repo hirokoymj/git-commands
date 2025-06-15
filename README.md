@@ -2,12 +2,13 @@
 
 ## Four locations
 
-1. Working Directory - your local development environment where you make changes to your code
+1. Working Directory (your local development env)
 2. Staging Area
 3. Local Repository
 4. Remote Repository
 
-![](./screen/four-locations.png)
+![](./screen/git-4-locations.png)
+![](./screen/git-local-locations.png)
 
 ## git clone
 
@@ -25,8 +26,9 @@
 
 - Save changes from Staging Srea to Local Repo with a comment.
 - take a snapshot of the staging area and saves it to your local repo.
-- Each commit creates **a unique identifier**. `* 63095ec (HEAD -> test1) first commit`
+- A commit hash == a unique identifier
 - https://git-scm.com/docs/git-commit
+  ![](./screen/commit-hash.png)
 
 ## git pull
 
@@ -112,21 +114,12 @@ ESC key
 
 1. `git merge` or `git pull`
 2. `git status` - check which files are conflicted.
-3. Conflict markers:
-
-- `HEAD` marker: - your branch changes.
-
-  ```js
-  <<<HEAD marker (Current change)
-  ```
-
-- Incoming marker: changes from another branch.
-  ```js
-  >>>>>main (Incoming Change)
-  ```
-
-4. Manually pick the changes either HEAD marker or Incoming marker. Merge conflict doesn't overwide the changes in your branch automatically.
+3. Check the conflict markers.
+4. Manually pick the changes either HEAD marker or Incoming marker.
 5. Run `git status` again but git doesn't know your change so run `git add` to add the changes to the state area each file.
+
+![](./screen/merge-conflict.png)
+![](./screen/after-merge-conflict.png)
 
 ## What is HEAD in Git?
 
