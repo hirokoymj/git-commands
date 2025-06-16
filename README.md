@@ -2,8 +2,8 @@
 
 ## Four locations
 
-1. Working Directory (your local development env)
-2. Staging Area
+1. Working Directory (unstaged = your local dev env)
+2. Staging Area (staged)
 3. Local Repository
 4. Remote Repository
 
@@ -164,11 +164,24 @@ git reset 3bde3a5
 git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Removed!!
 ```
 
-<hr />
-
-## git checkout . !!!Careful!!
+## git checkout .
 
 - Deleted all uncommited changes forever!
+
+## git stash
+
+- Takes your uncommitted changes (both staged and unstaged), saves them away.
+- It is useful when you want to get the latest remote repo changes into your working directory.
+- **unstaged**, **staged**, local repo, remote repo
+
+```js
+git stash
+git pull origin master
+git stash apply
+```
+
+- https://git-scm.com/docs/git-stash
+  ![](./screen/git-stash.png)
 
 ## References:
 
