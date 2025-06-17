@@ -52,7 +52,13 @@
 
 <hr />
 
-## git branch
+## git branch, git checkout -b
+
+```js
+git branch --list
+git branch new_branch
+git checkout -b new_branch //Create a new branch and then checkout
+```
 
 - List, create, or delete branches
 - List: `git branch` or `git branch --list`
@@ -60,18 +66,6 @@
 - Delete: `git branch -D <branchname>`
 - Git branching - allows you to diverge from the main codebase to develop a new feature without impacting the main code.
 - https://git-scm.com/docs/git-branch
-
-## git switch
-
-- Switch branches
-- `git switch branchname`
-- https://git-scm.com/docs/git-switch
-
-## git checkout
-
-- Switch branches or restore working tree files.
-- `git checkout -b my-branch` - Create a new branch named "new-branch" and check the resulting branch out.
-- https://git-scm.com/docs/git-checkout
 
 ## git rebase -i HEAD~x
 
@@ -183,6 +177,19 @@ git stash apply
 - https://git-scm.com/docs/git-stash
   ![](./screen/git-stash.png)
 
+## Pull Request
+
+- A pull request is a proposal to merge changes from one branch into another. In a pull request, collaborators can review and discuss the proposed changes before integrating them into the main codebase
+- Select `base` branch where you want to merge the curent branch. -> Add the title and description for a PR. -> create pull request.
+
+![](./screen/pull-request.png)
+
+## git log --all --decorate --graph --oneline
+
+- Shows git history with graphs.
+- `A Dog` = `git log --all --decorate --oneline --graph`
+  ![](./screen/git-log-adog.png)
+
 ## References:
 
 - https://www.datacamp.com/blog/git-interview-questions-and-answers
@@ -191,3 +198,4 @@ git stash apply
 - https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
 - https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
 - https://stackoverflow.com/questions/2304087/what-is-head-in-git
+- https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
