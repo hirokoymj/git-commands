@@ -57,7 +57,7 @@
 ```js
 git branch --list
 git branch new_branch
-git checkout -b new_branch //Create a new branch and then checkout
+git checkout -b new_branch //Create a new branch and then checkout the branch.
 ```
 
 - List, create, or delete branches
@@ -177,12 +177,26 @@ git stash apply
 - https://git-scm.com/docs/git-stash
   ![](./screen/git-stash.png)
 
-## Pull Request
+## Pull Request (PR)
 
 - A pull request is a proposal to merge changes from one branch into another. In a pull request, collaborators can review and discuss the proposed changes before integrating them into the main codebase
 - Select `base` branch where you want to merge the curent branch. -> Add the title and description for a PR. -> create pull request.
 
 ![](./screen/pull-request.png)
+
+## Pull Request merge options
+
+**Create a merge commit (default)**
+
+- [Git official doc](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#merge-your-commits)
+- All commits from the feature branch are added to the base branch in a merge commit.
+
+**Squash and merge**
+
+- [Git official doc](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits)
+- The pull request's commits are squashed into a single commit.
+
+![](./screen/merge-options.png)
 
 ## git log --all --decorate --graph --oneline
 
