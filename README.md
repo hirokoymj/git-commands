@@ -225,6 +225,27 @@ git push origin  mybranch
 - `A Dog` = `git log --all --decorate --oneline --graph`
   ![](./screen/git-log-adog.png)
 
+## Daily coding routine with git
+
+```js
+git clone remote_repo
+git branch mybranch
+git checkout mybranch
+//working...
+git push origin mybranch
+//Updating teammate's changes into mybranch
+git switch main
+git pull origin main
+git switch mybranch
+//When a merge conflict occurs, fixed them manually.
+//Keep working
+//Done mybranch
+git add .
+git commit -m "Done my tasks"
+git push origin mybranch
+//PR -> review -> Merged mybranch to main in Github.
+```
+
 ## References:
 
 - https://www.datacamp.com/blog/git-interview-questions-and-answers
