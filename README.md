@@ -104,7 +104,7 @@ ESC key
 
 - https://www.youtube.com/watch?v=AWayLpQHJeE
 
-## What is a conflict in Git?
+<!-- ## What is a conflict in Git?
 
 - https://www.youtube.com/watch?v=DloR0BOGNU0
 
@@ -115,7 +115,7 @@ ESC key
 5. Run `git status` again but git doesn't know your change so run `git add` to add the changes to the state area each file.
 
 ![](./screen/merge-conflict.png)
-![](./screen/after-merge-conflict.png)
+![](./screen/after-merge-conflict.png) -->
 
 ## What is HEAD in Git?
 
@@ -158,9 +158,9 @@ git reset 3bde3a5
 git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Removed!!
 ```
 
-## git checkout .
+<!-- ## git checkout .
 
-- Deleted all uncommited changes forever!
+- Deleted all uncommited changes forever! -->
 
 ## git stash
 
@@ -183,6 +183,27 @@ git stash apply
 - Select `base` branch where you want to merge the curent branch. -> Add the title and description for a PR. -> create pull request.
 
 ![](./screen/pull-request.png)
+
+## PR with a merge conflict
+
+- Merge Conflict occurs when changes made to the same part of the same file on two different branch.
+
+```js
+git pull origin main // 1. Update your local main branch.
+git switch mybranch // 2. Switch my branch and then merge the change into my branch.
+git merge main
+//===A merge conflict shows in conflict markers. Fix them manually.
+git add .
+git commit -m “Resolve merge conflict”
+git status
+git push origin  mybranch
+//===Go to PR again - Merge Conflict is gone.
+```
+
+![](./screen/merge-conflict.png)
+
+- https://www.youtube.com/watch?v=FDXSgyDGmho
+- https://www.youtube.com/watch?v=DloR0BOGNU0
 
 ## Pull Request merge options
 
