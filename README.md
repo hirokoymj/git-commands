@@ -2,70 +2,107 @@
 
 ## Four locations
 
-1. Working Directory (unstaged = your local dev env)
-2. Staging Area (staged)
-3. Local Repository
-4. Remote Repository
+1. Working Directory: File you edit, can be unstaged or staged.
+2. Staging Area (index): Changes marked for the next commit, git add
+3. Local Repository (.git): the hidden .git database that stores all commits, branches, and history on your machine.
+4. Remote Repository (GitHub)
 
-![](./screen/git-4-locations.png)
-![](./screen/git-locations.png)
+```bash
+Working Directory
+   ↓ git add
+Staging Area
+   ↓ git commit
+Local Repository
+```
 
-## git clone
+- The local repository is the hidden .git database that stores all commits, branches, and history on your machine.
 
-- An existing Remote Repo -> Local Repo.
-- Clone a repository into a new directory.
-- https://git-scm.com/docs/git-clone
+Q: How to “see” the local repository. See commits.
+A: `git log --oneline`
+
+Q: How to “see” the local repository. See branches (local repository)
+A: `git branch`
+
+## git fetch | git merge | git pull
+
+- `git fetch` → download remote updates (==invisible the changes)
+- `git fetch` → download remote updates TO `remote-tracking branches` (==NO visible changes)
+- `git merge` → change your branch
+- `git pull` → fetch + merge (automatic)
+- Fetch is like checking the menu.
+- Merge is like ordering the food 🍔
+- `origin/main` ==> local, read-only references of the remote main branch. (== remote-tracking branches)
+- `origin/feature-test` ==> local, read-only references of the remote feature-test branch. (==remote-tracking branches)
+
+```bash
+// I am main branch.
+git fetch origin 					# update remote-tracking branches
+git diff main origin/feature-test	# preview changes before merge
+git merge origin/feature-test		# apply changes to main
+```
 
 ## git add
 
-- Save files from Workind Directory to the staging area to prepare the next commit snapshot.
+- Save changes to the staging area for the next commit
 - Working Directory -> State Area
-- https://git-scm.com/docs/git-add
 
 ## git commit
 
-- Save changes from Staging Srea to Local Repo with a comment.
-- take a snapshot of the staging area and saves it to your local repo.
-- A commit hash == a unique identifier
-- https://git-scm.com/docs/git-commit
-  ![](./screen/commit-hash.png)
+- Save staged changes to the local repository
+
+## git clone
+
+- Copy a remote repository to a local directory
 
 ## git pull
 
-- To integrate your teammates's work, you use `git pull` which **fetches** changes from remote repository and **merges** them into your local repo.
-- Fetch and Merge.
-- https://git-scm.com/docs/git-pull
+- fetch + merge (automatic)
+- fetch and merge remote changes into the current branch
 
-![](./screen/git-fetch-git-pull.png)
+## git push
 
-## git fetch vs git pull?
+- upload local commits to the remote repository
 
-**git fetch:**
+## git branch
 
-- The git fetch command retrieves changes from a remote repository to the local repository.
-- but it does not update the working directory or merge any changes into the current branch.
-- This means that after fetching, you can review the changes made in the remote repository without affecting your local work.
+- List all local branches
 
-**git pull**
+## git branch xxx
 
-- fetching changes from a remote repo and merging them into the current your branch in **one step**. Fetch and Merge.
+- Create a new branch (does not switch to it)
 
-<hr />
+## git checkout -b new-branch
 
-## git branch, git checkout -b
+- Create a new branch and switch to it immediately
 
-```js
-git branch --list
-git branch new_branch
-git checkout -b new_branch //Create a new branch and then checkout the branch.
+## git status
+
+- show current repository state, staged vs unstaged changes.
+- Red → unstaged
+- Green → staged
+
+## git diff
+
+- show changes in working directory vs staging area
+
+## git stash
+
+- temporarily save uncommitted changes to reapply later
+
+```bash
+git stash
+git pull origin master
+git stash apply
 ```
 
-- List, create, or delete branches
-- List: `git branch` or `git branch --list`
-- Create: `git branch <branchname>`
-- Delete: `git branch -D <branchname>`
-- Git branching - allows you to diverge from the main codebase to develop a new feature without impacting the main code.
-- https://git-scm.com/docs/git-branch
+## Merge conflict
+
+- Merge Conflict occurs when changes made to the same part of the same file on two different branch.
+- Resolve by checking the conflict markers (HEAD for current branch, incoming branch markers) and fixing manually.
+
+## screenshots
+
+![](./screen/git-4-locations.png)
 
 ## git rebase -i HEAD~x
 
@@ -104,33 +141,13 @@ ESC key
 
 - https://www.youtube.com/watch?v=AWayLpQHJeE
 
-<!-- ## What is a conflict in Git?
-
-- https://www.youtube.com/watch?v=DloR0BOGNU0
-
-1. `git merge` or `git pull`
-2. `git status` - check which files are conflicted.
-3. Check the conflict markers.
-4. Manually pick the changes either HEAD marker or Incoming marker.
-5. Run `git status` again but git doesn't know your change so run `git add` to add the changes to the state area each file.
-
-![](./screen/merge-conflict.png)
-![](./screen/after-merge-conflict.png) -->
-
 ## What is HEAD in Git?
 
-- HEAD is a pointer to the current commit on the currently checked-out branch.
+- pointer to the current commit on the checked-out branch
   ![](./screen/HEAD-main.png)
   ![](./screen/HEAD-branch.png)
 
-## git status
-
-- Displays the current state of the repository in Git.
-- modified, Untracked, new file
-- identify which files are staged for the next commit.
-- A file in red ===> Unstaged
-- A file in green ===> Staged
-- https://git-scm.com/docs/git-status
+=======
 
 ## git reset vs git revert
 
@@ -162,43 +179,12 @@ git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Remo
 
 - Deleted all uncommited changes forever! -->
 
-## git stash
-
-- Takes your uncommitted changes (both staged and unstaged), saves them away.
-- It is useful when you want to get the latest remote repo changes into your working directory.
-- **unstaged**, **staged**, local repo, remote repo
-
-```js
-git stash
-git pull origin master
-git stash apply
-```
-
-- https://git-scm.com/docs/git-stash
-  ![](./screen/git-stash.png)
-
 ## Pull Request (PR)
 
 - A pull request is a proposal to merge changes from one branch into another. In a pull request, collaborators can review and discuss the proposed changes before integrating them into the main codebase
 - Select `base` branch where you want to merge the curent branch. -> Add the title and description for a PR. -> create pull request.
 
 ![](./screen/pull-request.png)
-
-## PR with a merge conflict
-
-- Merge Conflict occurs when changes made to the same part of the same file on two different branch.
-
-```js
-git pull origin main // 1. Update your local main branch.
-git switch mybranch // 2. Switch my branch and then merge the change into my branch.
-git merge main
-//===A merge conflict shows in conflict markers. Fix them manually.
-git add .
-git commit -m “Resolve merge conflict”
-git status
-git push origin  mybranch
-//===Go to PR again - Merge Conflict is gone.
-```
 
 ![](./screen/merge-conflict.png)
 
