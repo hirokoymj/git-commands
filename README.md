@@ -10,11 +10,14 @@
 ```bash
 Working Directory
    ↓ git add
+   ↑ git restore
 Staging Area
    ↓ git commit
+   ↑ git reset HEAD
 Local Repository
 ```
 
+- Unstage == Keep file changes
 - The local repository is the hidden .git database that stores all commits, branches, and history on your machine.
 
 Q: How to “see” the local repository. See commits.
@@ -46,9 +49,29 @@ git merge origin/feature-test		# apply changes to main
 - Save changes to the staging area for the next commit
 - Working Directory -> State Area
 
+## git restore --staged filename
+
+- Unstage a file
+  ```bash
+  git add xxx→ stage a file
+  git restore --staged xxx → unstage a file
+  ```
+
 ## git commit
 
-- Save staged changes to the local repository
+- Save staged changes to the local repository.
+
+## git reset HEAD~1
+
+- Undo commit and unstaged
+
+```bash
+git add → stage changes
+git restore --staged → unstage changes
+git commit → save staged changes
+git reset --soft → undo commit, keep staged
+git reset → undo commit, keep unstaged
+```
 
 ## git clone
 
@@ -95,142 +118,87 @@ git pull origin master
 git stash apply
 ```
 
+## git commit --amend
+
+- Edit the latest commit message
+
 ## Merge conflict
 
 - Merge Conflict occurs when changes made to the same part of the same file on two different branch.
 - Resolve by checking the conflict markers (HEAD for current branch, incoming branch markers) and fixing manually.
 
+## git rebase -i HEAD~x
+
+- squash multiple commits into one
+- squash these 3 commits into 1. `git rebase -i HEAD~3`
+
+```bash
+pick 0a2a79e test 2/11 ## Keep a first commit
+squash 36d7e81 commit test 2 # squash
+squash fb0cf39 commit test -3 # squash
+OR
+pick 0a2a79e test 2/11 ## Keep a first commit
+s 36d7e81 commit test 2 # squash
+s fb0cf39 commit test -3 # squash
+// Escape wq!
+// Add one clean commit
+```
+
+## What is HEAD in Git?
+
+- pointer to the current commit on the checked-out branch.
+
 ## screenshots
 
 ![](./screen/git-4-locations.png)
 
-## git rebase -i HEAD~x
+## A linear history
 
-- Git rebase is a handy tool to have for creating nice clean history in your git repository
-- Ex. Squash 3 commits history to one
-
-```
-git log
-git rebase -i HEAD~3
-pick 1b9d9cb commit 1
-pick 9917593 commit 2
-pick a571ceb commit 3
------------->Suash commit 2 and 3
-pick 1b9d9cb commit 1
-squash 9917593 commit 2
-squash a571ceb commit 3
-:wq!
-ESC key
-------------> Edit the comment for 3 commits.
-# This is a combination of 3 commits.
-# This is the 1st commit message:
-
-commit 1
-
-# This is the commit message #2:
-
-#commit 2
-
-# This is the commit message #3:
-
-#commit 3
-:wq!
-ESC key
-------------
+```bash
+A — B — C — D
 ```
 
-- https://www.youtube.com/watch?v=AWayLpQHJeE
-
-## What is HEAD in Git?
-
-- pointer to the current commit on the checked-out branch
-  ![](./screen/HEAD-main.png)
-  ![](./screen/HEAD-branch.png)
-
-=======
-
-## git reset vs git revert
-
-- Undo a git commit.
-- git reset -> Remove git commit history entirely.
-- git revert -> add revert history.
-- Already pushed ? `git revert` : `git reset`
-
-![](/screen/git-reset.png)
-![](/screen/git-revert-history.png)
-![](/screen/git-reset-vs-git-revert.png)
-
-- https://www.youtube.com/watch?v=GytsxgB4-HU
-- Check if already pushed or not.
-
-  `git log --oneline --branches --not --remotes`
-
-**Summary**
-
-```js
-git log --oneline
-git reset HEAD~1
-git reset HEAD~3
-git reset 3bde3a5
-git revert a649881 //=> Edit a comment => Done! => the commit "a649881" Not Removed!!
+```bash
+A — B — C — M
+        \   /
+         D — E
 ```
 
-<!-- ## git checkout .
+To get a linear history, teams usually require:
 
-- Deleted all uncommited changes forever! -->
+- rebase (not merge)
+- squash feature commits
+- fast-forward merges only
 
-## Pull Request (PR)
+```bash
+# Update develop
+git checkout develop
+git pull origin develop
+# Switch to your feature branch
+git checkout my-branch
+git rebase develop # If conflicts happen → fix them, then:
 
-- A pull request is a proposal to merge changes from one branch into another. In a pull request, collaborators can review and discuss the proposed changes before integrating them into the main codebase
-- Select `base` branch where you want to merge the curent branch. -> Add the title and description for a PR. -> create pull request.
+git add .
+git rebase --continue
+git rebase -i develop
 
-![](./screen/pull-request.png)
 
-![](./screen/merge-conflict.png)
+pick a1b2c3 commit 1
+pick d4e5f6 commit 2
+pick g7h8i9 commit 3
 
-- https://www.youtube.com/watch?v=FDXSgyDGmho
-- https://www.youtube.com/watch?v=DloR0BOGNU0
-
-## Pull Request merge options
-
-**Create a merge commit (default)**
-
-- [Git official doc](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#merge-your-commits)
-- All commits from the feature branch are added to the base branch in a merge commit.
-
-**Squash and merge**
-
-- [Git official doc](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits)
-- The pull request's commits are squashed into a single commit.
-
-![](./screen/merge-options.png)
+pick a1b2c3 commit 1
+s d4e5f6 commit 2
+s g7h8i9 commit 3
+# Edit the final commit message → save → exit.
+git push origin my-branch --force-with-lease
+```
 
 ## git log --all --decorate --graph --oneline
 
 - Shows git history with graphs.
 - `A Dog` = `git log --all --decorate --oneline --graph`
   ![](./screen/git-log-adog.png)
-
-## Daily coding routine with git
-
-```js
-git clone remote_repo
-git branch mybranch
-git checkout mybranch
-//working...
-git push origin mybranch
-//Updating teammate's changes into mybranch
-git switch main
-git pull origin main
-git switch mybranch
-//When a merge conflict occurs, fixed them manually.
-//Keep working
-//Done mybranch
-git add .
-git commit -m "Done my tasks"
-git push origin mybranch
-//PR -> review -> Merged mybranch to main in Github.
-```
 
 ## References:
 
