@@ -1,9 +1,9 @@
-# Git commands xxx yyyzzz
+# Git commands
 
 ## Four locations
 
 1. Working Directory: File you edit, can be unstaged or staged.
-2. Staging Area (index): Changes marked for the next commit, git add
+2. Staging Area: Changes marked for the next commit, git add
 3. Local Repository (.git): the hidden .git database that stores all commits, branches, and history on your machine.
 4. Remote Repository (GitHub)
 
@@ -18,17 +18,73 @@ Local Repository
 ```
 
 - Unstage == Keep file changes
-- The local repository is the hidden .git database that stores all commits, branches, and history on your machine.
+- **The local repository** is the **hidden .git database** that stores all commits, branches, and history on your machine.
 
+```
 Q: How to “see” the local repository. See commits.
-A: `git log --oneline`
+A: git log --oneline
+```
 
+```
 Q: How to “see” the local repository. See branches (local repository)
-A: `git branch`
+A: git branch
+```
 
-## git fetch | git merge | git pull
+## Prepare to Commit
 
-- `git fetch` → download remote updates (==invisible the changes)
+### git add
+
+- Save changes to the staging area for the next commit.
+- Working Directory ==> State Area
+
+### git restore --staged
+
+- Unstage a file
+  ```bash
+  git add xxx→ stage a file
+  git restore --staged xxx → unstage a file
+  ```
+
+### git add <=> git restore
+
+- stage changes <=> unstage changes
+
+### git status
+
+- show current repository state, staged vs unstaged changes.
+- Red → unstaged
+- Green → staged
+
+---
+
+## Make Commits
+
+### git commit
+
+- Save staged changes to the local repository.
+
+### git reset HEAD~1
+
+- Undo commit and unstaged
+
+```bash
+git add → stage changes
+git restore --staged → unstage changes
+git commit → save staged changes
+git reset --soft → undo commit, keep staged
+git reset → undo commit, keep unstaged
+```
+
+### git commit --amend
+
+- Edit the latest commit message
+
+---
+
+## Merge vs Regase
+
+### git fetch | git merge | git pull
+
 - `git fetch` → download remote updates TO `remote-tracking branches` (==NO visible changes)
 - `git merge` → change your branch
 - `git pull` → fetch + merge (automatic)
@@ -44,53 +100,28 @@ git diff main origin/feature-test	# preview changes before merge
 git merge origin/feature-test		# apply changes to main
 ```
 
-## git add
-
-- Save changes to the staging area for the next commit
-- Working Directory -> State Area
-
-## git restore --staged filename
-
-- Unstage a file
-  ```bash
-  git add xxx→ stage a file
-  git restore --staged xxx → unstage a file
-  ```
-
-## git commit
-
-- Save staged changes to the local repository.
-
-## git reset HEAD~1
-
-- Undo commit and unstaged
-
-```bash
-git add → stage changes
-git restore --staged → unstage changes
-git commit → save staged changes
-git reset --soft → undo commit, keep staged
-git reset → undo commit, keep unstaged
-```
-
-## git clone
-
-- Copy a remote repository to a local directory
-
-## git pull
+### git pull
 
 - fetch + merge (automatic)
 - fetch and merge remote changes into the current branch
 
-## git push
+### git push
 
 - upload local commits to the remote repository
 
-## git branch
+### git diff
+
+- show changes in working directory vs staging area
+
+---
+
+## Branch
+
+### git branch
 
 - List all local branches
 
-## git branch xxx
+### git branch xxx
 
 - Create a new branch (does not switch to it)
 
@@ -98,15 +129,7 @@ git reset → undo commit, keep unstaged
 
 - Create a new branch and switch to it immediately
 
-## git status
-
-- show current repository state, staged vs unstaged changes.
-- Red → unstaged
-- Green → staged
-
-## git diff
-
-- show changes in working directory vs staging area
+---
 
 ## git stash
 
@@ -118,16 +141,15 @@ git pull origin master
 git stash apply
 ```
 
-## git commit --amend
+## git clone
 
-- Edit the latest commit message
+- Copy a remote repository to a local directory
 
-## Merge conflict
+---
 
-- Merge Conflict occurs when changes made to the same part of the same file on two different branch.
-- Resolve by checking the conflict markers (HEAD for current branch, incoming branch markers) and fixing manually.
+## rebase
 
-## git rebase -i HEAD~x
+### git rebase -i HEAD~x
 
 - squash multiple commits into one
 - squash these 3 commits into 1. `git rebase -i HEAD~3`
@@ -144,13 +166,56 @@ s fb0cf39 commit test -3 # squash
 // Add one clean commit
 ```
 
-## What is HEAD in Git?
+### git rebase | git rebase -i
+
+**Normal rebase is for syncing code; interactive rebase is for cleaning history.**
+
+- `git rebase develop`: syncing code
+- `git rebase -i develop`:interactive rebase is for cleaning history before pushing / opening PR
+
+  ```js
+  pick a1b2c3 commit 1
+  s d4e5f6 commit 2
+  s g7h8i9 commit 3
+  ```
+
+```bash
+# Sync with develop (may happen many times)
+git rebase develop
+
+# Finish feature work
+# ...
+
+# Clean history ONCE
+git rebase -i develop
+
+# Push
+git push origin my-branch --force-with-lease
+```
+
+---
+
+## History
+
+## git log --oneline --graph
+
+- Show commit history with graph
+
+```bash
+git log --oneline → compact commit history
+git log --oneline --graph → commit history with graph
+```
+
+## Misc
+
+### Merge conflict
+
+- Merge Conflict occurs when changes made to the same part of the same file on two different branch.
+- Resolve by checking the conflict markers (HEAD for current branch, incoming branch markers) and fixing manually.
+
+### What is HEAD in Git?
 
 - pointer to the current commit on the checked-out branch.
-
-## screenshots
-
-![](./screen/git-4-locations.png)
 
 ## A linear history
 
@@ -176,36 +241,39 @@ git checkout develop
 git pull origin develop
 # Switch to your feature branch
 git checkout my-branch
-git rebase develop # If conflicts happen → fix them, then:
-
+git rebase develop ## git merge vs git rebase
+### !!! If conflicts happen → fix them, then:
 git add .
 git rebase --continue
-git rebase -i develop
+### Then, I keep working on my-branch to complete my tasks.
 
-
-pick a1b2c3 commit 1
-pick d4e5f6 commit 2
-pick g7h8i9 commit 3
-
-pick a1b2c3 commit 1
-s d4e5f6 commit 2
-s g7h8i9 commit 3
-# Edit the final commit message → save → exit.
+git rebase -i develop ## interactive rebase to edit your own commits (squash, reorder, rename) on top of develop.
 git push origin my-branch --force-with-lease
 ```
 
-## git log --all --decorate --graph --oneline
+```bash
+## Before rebase
+A — B — C  (develop)
+       \
+        D  (feature1)
+## After rebase
+A — B — C — D'  (feature1)
+```
 
-- Shows git history with graphs.
-- `A Dog` = `git log --all --decorate --oneline --graph`
-  ![](./screen/git-log-adog.png)
+## When does main get a linear history?
 
-## References:
+```bash
+git checkout develop
+git merge feature1
 
-- https://www.datacamp.com/blog/git-interview-questions-and-answers
-- https://www.youtube.com/watch?v=e9lnsKot_SQ&t=75s
-- https://git-scm.com/docs/git-branch
-- https://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master
-- https://stackoverflow.com/questions/66209755/how-do-i-create-git-branch-and-switch-at-a-time-when-creating-a-branch
-- https://stackoverflow.com/questions/2304087/what-is-head-in-git
-- https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
+# A — B — C — D'  (develop)
+```
+
+## screenshot
+
+![](./screen/git-4-locations.png)
+
+## Reference
+
+- https://git-scm.com/docs/git
+- https://git-scm.com/cheat-sheet#make-commits
