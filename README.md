@@ -1,5 +1,43 @@
 # Git commands
 
+- [Git commands](#git-commands)
+  - [Four locations](#four-locations)
+  - [Prepare to Commit](#prepare-to-commit)
+    - [git add](#git-add)
+    - [git restore --staged](#git-restore---staged)
+    - [git add \<=\> git restore](#git-add--git-restore)
+    - [git status](#git-status)
+  - [Make Commits](#make-commits)
+    - [git commit](#git-commit)
+    - [git reset HEAD~1](#git-reset-head1)
+    - [git commit --amend](#git-commit---amend)
+  - [Merge vs Rebase](#merge-vs-rebase)
+    - [git fetch | git merge | git pull](#git-fetch--git-merge--git-pull)
+    - [git merge](#git-merge)
+    - [git pull](#git-pull)
+    - [git push](#git-push)
+    - [git diff](#git-diff)
+  - [Branch](#branch)
+    - [git branch](#git-branch)
+    - [git branch xxx](#git-branch-xxx)
+    - [git checkout -b new-branch](#git-checkout--b-new-branch)
+  - [Discard Your Changes](#discard-your-changes)
+    - [git stash](#git-stash)
+    - [git clone](#git-clone)
+  - [Combine Diverged Branches](#combine-diverged-branches)
+    - [git merge vs git rebase](#git-merge-vs-git-rebase)
+    - [git rebase | git rebase -i](#git-rebase--git-rebase--i)
+    - [git rebase -i \[branch\]](#git-rebase--i-branch)
+    - [A linear history](#a-linear-history)
+  - [History](#history)
+    - [git log --oneline --graph](#git-log---oneline---graph)
+  - [Misc](#misc)
+    - [Merge conflict](#merge-conflict)
+    - [What is HEAD in Git?](#what-is-head-in-git)
+    - [When does main get a linear history?](#when-does-main-get-a-linear-history)
+    - [screenshot](#screenshot)
+    - [Reference](#reference)
+
 ## Four locations
 
 1. Working Directory: File you edit, can be unstaged or staged.
@@ -30,6 +68,8 @@ Q: How to “see” the local repository. See branches (local repository)
 A: git branch
 ```
 
+---
+
 ## Prepare to Commit
 
 ### git add
@@ -54,6 +94,25 @@ A: git branch
 - show current repository state, staged vs unstaged changes.
 - Red → unstaged
 - Green → staged
+
+```bash
+# Summary(location/Prepare to Commit)
+
+1. Working dir: files you edit
+2. Staging: changes prepared for commit (git add)
+3. Local repo (.git): commits, branches & history
+4. Remote repo: GitHub
+
+Working dir ↔ Staging
+- git add
+- git restore --staged
+
+Staging ↔ Local repo
+- git commit
+- git reset HEAD
+
+git commit --amend: Edit the latest commit message
+```
 
 ---
 
@@ -81,12 +140,20 @@ git reset → undo commit, keep unstaged
 
 ---
 
-## Merge vs Regase
+## Merge vs Rebase
+
+```bash
+# Summary
+- git fetch: download remote updates to remote-tracking branches (no working directory changes)
+- git merge: merge another branch into the current branch.
+- git pull: fetch + merge (or rebase, depending on config)
+- origin/*: local pointer
+```
 
 ### git fetch | git merge | git pull
 
 - `git fetch` → download remote updates TO `remote-tracking branches` (==NO visible changes)
-- `git merge` → change your branch
+- `git merge` → merge another branch into the current branch.
 - `git pull` → fetch + merge (automatic)
 - Fetch is like checking the menu.
 - Merge is like ordering the food 🍔
@@ -99,6 +166,8 @@ git fetch origin 					# update remote-tracking branches
 git diff main origin/feature-test	# preview changes before merge
 git merge origin/feature-test		# apply changes to main
 ```
+
+### git merge
 
 ### git pull
 
@@ -117,6 +186,13 @@ git merge origin/feature-test		# apply changes to main
 
 ## Branch
 
+```bash
+# summary (Branch)
+git branch: List all local branches.
+git branch xxx: Create a new branch.
+git checkout -b new-branch: Create a new branch and switch to it.
+```
+
 ### git branch
 
 - List all local branches
@@ -125,13 +201,15 @@ git merge origin/feature-test		# apply changes to main
 
 - Create a new branch (does not switch to it)
 
-## git checkout -b new-branch
+### git checkout -b new-branch
 
 - Create a new branch and switch to it immediately
 
 ---
 
-## git stash
+## Discard Your Changes
+
+### git stash
 
 - temporarily save uncommitted changes to reapply later
 
@@ -141,18 +219,98 @@ git pull origin master
 git stash apply
 ```
 
-## git clone
+### git clone
 
 - Copy a remote repository to a local directory
 
+```bash
+# Summary
+git stash : temporarily save uncommitted changes to reapply later.
+git stash apply:
+```
+
 ---
 
-## rebase
+## Combine Diverged Branches
 
-### git rebase -i HEAD~x
+### git merge vs git rebase
 
-- squash multiple commits into one
-- squash these 3 commits into 1. `git rebase -i HEAD~3`
+**Option A: git merge develop (preserve history)**
+
+```bash
+git merge develop
+A — B — C ──┐
+       \    M  (my-branch)
+        D — E
+```
+
+- M = merge commit
+- D and E keep their original hashes
+- History is non-linear
+- No history rewriting
+- ✅ Creates 1 new merge commit
+
+**Option B: git rebase develop (linear history)**
+
+```bash
+git rebase develop
+A — B — C — D' — E'  (my-branch)
+```
+
+- D → D'
+- E → E'
+- No merge commit
+- Commits are replayed on top of C
+- Commit hashes change
+- ✅ Creates new commits, but not a merge commit
+
+**Summary**
+
+```
+- Merge adds a merge commit.
+- Rebase rewrites commits to create a linear history without a merge commit.
+```
+
+---
+
+### git rebase | git rebase -i
+
+- **Normal rebase is for syncing code; interactive rebase is for cleaning history.**
+
+```bash
+git rebase develop: syncing code
+git rebase -i [branch]:interactive rebase is for cleaning history before pushing / opening PR
+```
+
+**Flow**
+
+```bash
+# Update develop
+1. git checkout develop
+2. git pull origin develop
+# Switch to your feature branch
+3. git checkout my-branch
+4. git rebase develop ## git merge vs git rebase
+### !!! If conflicts happen → fix them, then:
+5. git add .
+6. git rebase --continue
+### Then, I keep working on my-branch to complete my tasks.
+7. git rebase -i develop ## interactive rebase to edit your own commits (squash, reorder, rename) on top of develop.
+8. git push origin my-branch --force-with-lease
+```
+
+```bash
+## Before rebase
+A — B — C  (develop)
+       \
+        D  (feature1)
+## After rebase
+A — B — C — D'  (feature1)
+```
+
+### git rebase -i [branch]
+
+- interactive rebase is for cleaning history before pushing / opening PR
 
 ```bash
 pick 0a2a79e test 2/11 ## Keep a first commit
@@ -166,38 +324,19 @@ s fb0cf39 commit test -3 # squash
 // Add one clean commit
 ```
 
-### git rebase | git rebase -i
+### A linear history
 
-**Normal rebase is for syncing code; interactive rebase is for cleaning history.**
+To get a linear history, teams usually require:
 
-- `git rebase develop`: syncing code
-- `git rebase -i develop`:interactive rebase is for cleaning history before pushing / opening PR
-
-  ```js
-  pick a1b2c3 commit 1
-  s d4e5f6 commit 2
-  s g7h8i9 commit 3
-  ```
-
-```bash
-# Sync with develop (may happen many times)
-git rebase develop
-
-# Finish feature work
-# ...
-
-# Clean history ONCE
-git rebase -i develop
-
-# Push
-git push origin my-branch --force-with-lease
-```
+- rebase (not merge)
+- squash feature commits
+- fast-forward merges only
 
 ---
 
 ## History
 
-## git log --oneline --graph
+### git log --oneline --graph
 
 - Show commit history with graph
 
@@ -217,50 +356,7 @@ git log --oneline --graph → commit history with graph
 
 - pointer to the current commit on the checked-out branch.
 
-## A linear history
-
-```bash
-A — B — C — D
-```
-
-```bash
-A — B — C — M
-        \   /
-         D — E
-```
-
-To get a linear history, teams usually require:
-
-- rebase (not merge)
-- squash feature commits
-- fast-forward merges only
-
-```bash
-# Update develop
-git checkout develop
-git pull origin develop
-# Switch to your feature branch
-git checkout my-branch
-git rebase develop ## git merge vs git rebase
-### !!! If conflicts happen → fix them, then:
-git add .
-git rebase --continue
-### Then, I keep working on my-branch to complete my tasks.
-
-git rebase -i develop ## interactive rebase to edit your own commits (squash, reorder, rename) on top of develop.
-git push origin my-branch --force-with-lease
-```
-
-```bash
-## Before rebase
-A — B — C  (develop)
-       \
-        D  (feature1)
-## After rebase
-A — B — C — D'  (feature1)
-```
-
-## When does main get a linear history?
+### When does main get a linear history?
 
 ```bash
 git checkout develop
@@ -269,11 +365,11 @@ git merge feature1
 # A — B — C — D'  (develop)
 ```
 
-## screenshot
+### screenshot
 
 ![](./screen/git-4-locations.png)
 
-## Reference
+### Reference
 
 - https://git-scm.com/docs/git
 - https://git-scm.com/cheat-sheet#make-commits
