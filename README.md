@@ -1,48 +1,57 @@
 # Git commands
 
-```bash
-# Core model
-Working Dir → Staging → Local Repo → Remote Repo
+### 📍 The Four Locations
 
-# Prepare & commit
-git add        # stage changes
-git restore --staged  # unstage
-git commit     # save snapshot to local repo
-git commit --amend  # edit last commit
-git reset      # undo commit (keep changes)
+| Command                | Direction                | Description                              |
+| :--------------------- | :----------------------- | :--------------------------------------- |
+| `git add <file>`       | **Work Dir → Staging**   | Stage changes for the next commit.       |
+| `git restore --staged` | **Staging → Work Dir**   | Unstage a file (keep the changes).       |
+| `git commit -m "msg"`  | **Staging → Local Repo** | Save staged changes to history.          |
+| `git push`             | **Local Repo → Remote**  | Upload local commits to the server.      |
+| `git fetch`            | **Remote → Local Repo**  | Update remote tracking (no code change). |
+| `git pull`             | **Remote → Work Dir**    | Fetch + Merge (update your files).       |
 
-# Sync branches
-git fetch      # update remote-tracking branches
-git merge      # merge branches (creates merge commit)
-git rebase     # replay commits for linear history
-git pull       # fetch + merge (or rebase)
+---
 
-# History cleanup
-git rebase -i  # squash / reorder / rename commits before PR
+### 🌿 Branching & Merging
 
-# Branching
-git branch     # list branches
-git checkout -b <branch>  # create & switch
+- `git branch` : List all local branches.
+- `git branch <name>` : Create a new branch.
+- `git checkout -b <name>` : Create and **switch** to a new branch.
+- `git merge <branch>` : Join histories; creates a **merge commit**.
+- `git rebase <branch>` : Replays commits on top of `<branch>`; creates **linear history**.
 
-# Share work
-git push       # upload commits
-git push --force-with-lease  # after rebase
+---
 
-# Inspect
-git status     # state of files
-git diff       # see changes
-git log --oneline --graph  # history
+### 🛠️ Undo & Stash
 
-# Temporary save
-git stash      # save uncommitted work
+- `git reset HEAD~1` : Undo last commit; keep changes in Working Directory.
+- `git commit --amend` : Edit the last commit message or add files.
+- `git stash` : Temporarily "hide" uncommitted changes.
+- `git stash apply` : Bring hidden changes back.
+- `git clone <url>` : Copy a remote repository to your machine.
 
-# Key rules
-- Merge → adds merge commit
-- Rebase → rewrites commits (new hashes)
-- Feature branches: git rebase (sync) -> working -> git rebase -i (squash)
-```
+---
 
-- [Git commands](#git-commands)
+### 🔍 Inspection
+
+- `git status` : See current state (Red = Unstaged, Green = Staged).
+- `git log --oneline --graph` : View a visual, compact commit history.
+- `git diff` : Show changes in Working Directory vs. Staging.
+- `git diff <b1> <b2>` : Compare changes between two branches.
+
+---
+
+### 🚀 The "Linear History" Workflow
+
+_To keep a clean, straight-line history before merging:_
+
+1.  **Update Main:** `git checkout main` && `git pull`
+2.  **Sync Feature:** `git checkout feature` && `git rebase main`
+3.  **Clean History:** `git rebase -i main` (Squash/Rename)
+4.  **Update Remote:** `git push origin feature --force-with-lease`
+
+- [Git commands](#git-commands) - [📍 The Four Locations](#-the-four-locations) - [🌿 Branching \& Merging](#-branching--merging) - [🛠️ Undo \& Stash](#️-undo--stash) - [🔍 Inspection](#-inspection) - [🚀 The "Linear History" Workflow](#-the-linear-history-workflow)
   - [Four locations](#four-locations)
   - [Prepare to Commit](#prepare-to-commit)
     - [git add](#git-add)
