@@ -1,5 +1,47 @@
 # Git commands
 
+```bash
+# Core model
+Working Dir → Staging → Local Repo → Remote Repo
+
+# Prepare & commit
+git add        # stage changes
+git restore --staged  # unstage
+git commit     # save snapshot to local repo
+git commit --amend  # edit last commit
+git reset      # undo commit (keep changes)
+
+# Sync branches
+git fetch      # update remote-tracking branches
+git merge      # merge branches (creates merge commit)
+git rebase     # replay commits for linear history
+git pull       # fetch + merge (or rebase)
+
+# History cleanup
+git rebase -i  # squash / reorder / rename commits before PR
+
+# Branching
+git branch     # list branches
+git checkout -b <branch>  # create & switch
+
+# Share work
+git push       # upload commits
+git push --force-with-lease  # after rebase
+
+# Inspect
+git status     # state of files
+git diff       # see changes
+git log --oneline --graph  # history
+
+# Temporary save
+git stash      # save uncommitted work
+
+# Key rules
+- Merge → adds merge commit
+- Rebase → rewrites commits (new hashes)
+- Feature branches: git rebase (sync) -> working -> git rebase -i (squash)
+```
+
 - [Git commands](#git-commands)
   - [Four locations](#four-locations)
   - [Prepare to Commit](#prepare-to-commit)
@@ -24,8 +66,8 @@
   - [Discard Your Changes](#discard-your-changes)
     - [git stash](#git-stash)
     - [git clone](#git-clone)
-  - [Combine Diverged Branches](#combine-diverged-branches)
-    - [git merge vs git rebase](#git-merge-vs-git-rebase)
+  - [merge vs rebase](#merge-vs-rebase-1)
+  - [git rebase vs git rebase -i (interactive rebase)](#git-rebase-vs-git-rebase--i-interactive-rebase)
     - [git rebase | git rebase -i](#git-rebase--git-rebase--i)
     - [git rebase -i \[branch\]](#git-rebase--i-branch)
     - [A linear history](#a-linear-history)
@@ -35,8 +77,8 @@
     - [Merge conflict](#merge-conflict)
     - [What is HEAD in Git?](#what-is-head-in-git)
     - [When does main get a linear history?](#when-does-main-get-a-linear-history)
-    - [screenshot](#screenshot)
-    - [Reference](#reference)
+  - [screenshot](#screenshot)
+  - [Reference](#reference)
 
 ## Four locations
 
@@ -94,25 +136,6 @@ A: git branch
 - show current repository state, staged vs unstaged changes.
 - Red → unstaged
 - Green → staged
-
-```bash
-# Summary(location/Prepare to Commit)
-
-1. Working dir: files you edit
-2. Staging: changes prepared for commit (git add)
-3. Local repo (.git): commits, branches & history
-4. Remote repo: GitHub
-
-Working dir ↔ Staging
-- git add
-- git restore --staged
-
-Staging ↔ Local repo
-- git commit
-- git reset HEAD
-
-git commit --amend: Edit the latest commit message
-```
 
 ---
 
@@ -231,9 +254,7 @@ git stash apply:
 
 ---
 
-## Combine Diverged Branches
-
-### git merge vs git rebase
+## merge vs rebase
 
 **Option A: git merge develop (preserve history)**
 
@@ -272,6 +293,8 @@ A — B — C — D' — E'  (my-branch)
 ```
 
 ---
+
+## git rebase vs git rebase -i (interactive rebase)
 
 ### git rebase | git rebase -i
 
@@ -365,11 +388,11 @@ git merge feature1
 # A — B — C — D'  (develop)
 ```
 
-### screenshot
+## screenshot
 
 ![](./screen/git-4-locations.png)
 
-### Reference
+## Reference
 
 - https://git-scm.com/docs/git
 - https://git-scm.com/cheat-sheet#make-commits
