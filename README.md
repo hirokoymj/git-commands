@@ -11,8 +11,7 @@
     - [git commit](#git-commit)
     - [git reset HEAD~1](#git-reset-head1)
     - [git commit --amend](#git-commit---amend)
-  - [Merge vs Rebase](#merge-vs-rebase)
-    - [git fetch | git merge | git pull](#git-fetch--git-merge--git-pull)
+  - [fetch vs merge vs pull](#fetch-vs-merge-vs-pull)
     - [git merge](#git-merge)
     - [git pull](#git-pull)
     - [git push](#git-push)
@@ -24,7 +23,7 @@
   - [Discard Your Changes](#discard-your-changes)
     - [git stash](#git-stash)
     - [git clone](#git-clone)
-  - [merge vs rebase](#merge-vs-rebase-1)
+  - [merge vs rebase](#merge-vs-rebase)
   - [git rebase vs git rebase -i (interactive rebase)](#git-rebase-vs-git-rebase--i-interactive-rebase)
     - [git rebase | git rebase -i](#git-rebase--git-rebase--i)
     - [git rebase -i \[branch\]](#git-rebase--i-branch)
@@ -121,17 +120,7 @@ git reset → undo commit, keep unstaged
 
 ---
 
-## Merge vs Rebase
-
-```bash
-# Summary
-- git fetch: download remote updates to remote-tracking branches (no working directory changes)
-- git merge: merge another branch into the current branch.
-- git pull: fetch + merge (or rebase, depending on config)
-- origin/*: local pointer
-```
-
-### git fetch | git merge | git pull
+## fetch vs merge vs pull
 
 - `git fetch` → download remote updates TO `remote-tracking branches` (==NO visible changes)
 - `git merge` → merge another branch into the current branch.
