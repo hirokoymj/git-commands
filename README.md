@@ -12,8 +12,7 @@
     - [git reset HEAD~1](#git-reset-head1)
     - [git commit --amend](#git-commit---amend)
   - [fetch vs merge vs pull](#fetch-vs-merge-vs-pull)
-    - [git merge](#git-merge)
-    - [git pull](#git-pull)
+    - [fetch, merge, pull](#fetch-merge-pull)
     - [git push](#git-push)
     - [git diff](#git-diff)
   - [Branch](#branch)
@@ -24,6 +23,8 @@
     - [git stash](#git-stash)
     - [git clone](#git-clone)
   - [merge vs rebase](#merge-vs-rebase)
+    - [git merge (preserve history)](#git-merge-preserve-history)
+    - [git rebase](#git-rebase)
   - [git rebase vs git rebase -i (interactive rebase)](#git-rebase-vs-git-rebase--i-interactive-rebase)
     - [git rebase | git rebase -i](#git-rebase--git-rebase--i)
     - [git rebase -i \[branch\]](#git-rebase--i-branch)
@@ -122,6 +123,8 @@ git reset → undo commit, keep unstaged
 
 ## fetch vs merge vs pull
 
+### fetch, merge, pull
+
 - `git fetch` → download remote updates TO `remote-tracking branches` (==NO visible changes)
 - `git merge` → merge another branch into the current branch.
 - `git pull` → fetch + merge (automatic)
@@ -136,13 +139,6 @@ git fetch origin 					# update remote-tracking branches
 git diff main origin/feature-test	# preview changes before merge
 git merge origin/feature-test		# apply changes to main
 ```
-
-### git merge
-
-### git pull
-
-- fetch + merge (automatic)
-- fetch and merge remote changes into the current branch
 
 ### git push
 
@@ -203,7 +199,9 @@ git stash apply:
 
 ## merge vs rebase
 
-**Option A: git merge develop (preserve history)**
+### git merge (preserve history)
+
+- **git merge** combines another branch into your current branch by creating a new merge commit that preserves both histories.
 
 ```bash
 git merge develop
@@ -218,7 +216,9 @@ A — B — C ──┐
 - No history rewriting
 - ✅ Creates 1 new merge commit
 
-**Option B: git rebase develop (linear history)**
+### git rebase
+
+- git rebase rewrites commit history by replaying commits on top of another base commit, creating a linear history.
 
 ```bash
 git rebase develop
@@ -231,13 +231,6 @@ A — B — C — D' — E'  (my-branch)
 - Commits are replayed on top of C
 - Commit hashes change
 - ✅ Creates new commits, but not a merge commit
-
-**Summary**
-
-```
-- Merge adds a merge commit.
-- Rebase rewrites commits to create a linear history without a merge commit.
-```
 
 ---
 
