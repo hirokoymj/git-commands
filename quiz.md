@@ -162,6 +162,16 @@ A -- B -- C -- D' -- E'   (feature/login)
 
 **A9-4:**
 
-5. When should you avoid using git rebase?
+- Rebasing creates a clean, linear commit history, which makes the project history easier to read and manage.
 
-> You should avoid using rebase on shared branches that other team members are using, because it rewrites commit history.
+---
+
+**Q9-5:**
+
+- When should you avoid using git rebase?
+
+**A9-5:**
+
+- shared branches that other team members are using, because it rewrites commit history.
+
+---
